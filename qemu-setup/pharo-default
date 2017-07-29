@@ -1,0 +1,5 @@
+#!/bin/sh
+
+cd /home/tc
+
+./pharo -vm-display-null -vm-sound-null Pharo.image --no-default-preferences "$@"

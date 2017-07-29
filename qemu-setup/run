@@ -1,0 +1,50 @@
+#!/usr/local/bin/bash
+
+cd /home/tc
+
+LOCK='run.lock'
+SCRIPT='run.st'
+LOG='run.log'
+
+set_content() {
+	CONTENT="$1"
+	CONTENT_LENGTH=$(printf "$CONTENT" | wc -c)
+	printf 'Content-Type: text/plain\r\n'
+	printf "Content-Length: $CONTENT_LENGTH\r\n"
+	printf '\r\n'
+	printf "$CONTENT"
+}
+run_pharo() {
+	./pharo-default st --quit "$1" &> "$2"
+	if [ $? -ne 0 ]
+	then
+		printf 'HTTP/1.1 400 Bad Request\r\n'
+	else
+		printf 'HTTP/1.1 200 OK\r\n'
+	fi
+	# skip iconv_open(UTF-8, MACINTOSH): Invalid argument
+	set_content "$(tail -n +2 "$2")"
+	rm -f "$2"
+}
+# available in subshell
+export -f set_content
+export -f run_pharo
+
+(
+	timeout -t 30 flock 200
+	if [ $? -ne 0 ]
+	then
+		printf 'HTTP/1.1 503 Service Unavailable\r\n'
+		set_content 'Could not acquire lock, retry later.'
+		exit 1
+	fi
+	cat > "$SCRIPT"
+	timeout -t 30 bash -c 'run_pharo ${1+"$@"}' run_pharo "$SCRIPT" "$LOG"
+	rm -f "$SCRIPT"
+	if [ $? -ne 0 ]
+	then
+		printf 'HTTP/1.1 504 Gateway Timeout\r\n'
+		set_content 'Pharo took too long to execute, optimize script.'
+		exit 1
+	fi
+) 200> "$LOCK"
