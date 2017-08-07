@@ -1,0 +1,16 @@
+{
+	"commentStamp" : "",
+	"super" : "Object",
+	"category" : "Randy-Remote",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [
+		"EndMarker",
+		"StartMarker"
+	],
+	"instvars" : [
+		"process"
+	],
+	"name" : "RandyServer",
+	"type" : "normal"
+}
