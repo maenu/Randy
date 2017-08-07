@@ -6,7 +6,7 @@ baseline: spec
 		do: [ spec
 				configuration: 'DeepTraverser'
 					with: [ spec
-						versionString: #stable;
+						versionString: #development;
 						repository: 'http://www.smalltalkhub.com/mc/Moose/DeepTraverser/main' ];
 				configuration: 'NeoJSON'
 					with: [ spec
