@@ -1,10 +1,23 @@
 meta-data
 start
 	| installBlock |
-	process := OSProcess command: 'qemu-system-i386 -nographic -snapshot -hda ../qemu-setup/pharo.img -device e1000,netdev=net0 -netdev user,id=net0,hostfwd=tcp::8080-:80 -m 512 -smp 1 -localtime'.
+	"ensure old process is stopped"
+	process ifNotNil: [ self stop ].
+	"run new process"
+	process := OSSUnixSubprocess new
+		command: 'qemu-system-i386';
+		arguments: #('-nographic' '-snapshot' '-hda' '../qemu-setup/pharo.img' '-device' 'e1000,netdev=net0' '-netdev' 'user,id=net0,hostfwd=tcp::8080-:80' '-m' '1024' '-smp' '1' '-localtime');
+		run;
+		yourself.
+	"wait until reachable"
+	ZnClient new
+		numberOfRetries: 61;
+		retryDelay: 5;
+		head: 'http://localhost:8080'.
+	"install randy"
 	installBlock := [ Metacello new
-		configuration: 'Randy';
-		repository: 'github://maenu/pharo-randy';
-		load: 'VM'.
+		baseline: #Randy;
+		repository: 'github://maenu/Randy:master/src/pharo';
+		load.
 	SmalltalkImage current saveSession ].
-	self run: installBlock sourceNode source , ' value'
+	^ self run: installBlock sourceNode formattedCode , ' value'

@@ -1,4 +1,4 @@
 initialization
 initialize
-	StartMarker := '@#$%'.
-	EndMarker := '%$#@'
+	StartMarker := '@#$'.
+	EndMarker := '$#@'
