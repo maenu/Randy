@@ -24,7 +24,7 @@ run_pharo() {
 	fi
 	# skip iconv_open(UTF-8, MACINTOSH): Invalid argument
 	set_content "$(tail -n +2 "$2")"
-	rm -f "$2"
+	rm -f "$1" "$2"
 }
 # available in subshell
 export -f set_content
@@ -39,8 +39,7 @@ export -f run_pharo
 		exit 1
 	fi
 	cat > "$SCRIPT"
-	timeout -t 30 bash -c 'run_pharo ${1+"$@"}' run_pharo "$SCRIPT" "$LOG"
-	rm -f "$SCRIPT"
+	timeout -t 270 bash -c 'run_pharo ${1+"$@"}' run_pharo "$SCRIPT" "$LOG"
 	if [ $? -ne 0 ]
 	then
 		printf 'HTTP/1.1 504 Gateway Timeout\r\n'
