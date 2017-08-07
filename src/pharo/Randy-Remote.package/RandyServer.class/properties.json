@@ -9,7 +9,9 @@
 		"StartMarker"
 	],
 	"instvars" : [
-		"process"
+		"process",
+		"port",
+		"image"
 	],
 	"name" : "RandyServer",
 	"type" : "normal"

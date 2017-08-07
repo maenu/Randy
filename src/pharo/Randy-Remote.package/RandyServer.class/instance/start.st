@@ -6,14 +6,37 @@ start
 	"run new process"
 	process := OSSUnixSubprocess new
 		command: 'qemu-system-i386';
-		arguments: #('-nographic' '-snapshot' '-hda' '../qemu-setup/pharo.img' '-device' 'e1000,netdev=net0' '-netdev' 'user,id=net0,hostfwd=tcp::8080-:80' '-m' '1024' '-smp' '1' '-localtime');
-		run;
+		arguments:
+			{'-nographic'.
+			'-snapshot'.
+			'-hda'.
+			image.
+			'-device'.
+			'e1000,netdev=net0'.
+			'-netdev'.
+			('user,id=net0,hostfwd=tcp::' , port asString , '-:80').
+			'-m'.
+			'2048'.
+			'-smp'.
+			'2'.
+			'-localtime'};
+		redirectStdout;
+		redirectStderr;
 		yourself.
+	[ process
+		runAndWaitOnExitDo: [ :process0 :out :err | 
+			Transcript
+				show: 'RandyServer qemu exit with error status: ' , process exitStatusInterpreter printString;
+				cr;
+				show: 'RandyServer qemu stdout: ' , out;
+				cr;
+				show: 'RandyServer qemu stderr: ' , err;
+				cr ] ] fork.
 	"wait until reachable"
 	ZnClient new
-		numberOfRetries: 61;
-		retryDelay: 5;
-		head: 'http://localhost:8080'.
+		numberOfRetries: 30;
+		retryDelay: 1;
+		head: 'http://localhost:' , port asString.
 	"install randy"
 	installBlock := [ Metacello new
 		baseline: #Randy;
