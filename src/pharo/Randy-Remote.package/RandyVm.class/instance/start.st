@@ -1,6 +1,6 @@
 meta-data
 start
-	| installBlock |
+	| installBlock installOutput |
 	"ensure old process is stopped"
 	process ifNotNil: [ self stop ].
 	"run new process"
@@ -16,10 +16,11 @@ start
 			'-netdev'.
 			('user,id=net0,hostfwd=tcp::' , port asString , '-:80').
 			'-m'.
-			'2048'.
+			'512'.
 			'-smp'.
-			'2'.
+			'1'.
 			'-localtime'};
+			terminateOnShutdown;
 		redirectStdout;
 		redirectStderr;
 		yourself.
@@ -38,9 +39,14 @@ start
 		retryDelay: 1;
 		head: 'http://localhost:' , port asString.
 	"install randy"
-	installBlock := [ Metacello new
+	installBlock := [ :installedMarker | 
+	Metacello new
 		baseline: #Randy;
 		repository: 'github://maenu/Randy:master/src/pharo';
 		load.
-	SmalltalkImage current saveSession ].
-	^ self run: installBlock sourceNode formattedCode , ' value'
+	SmalltalkImage current saveSession.
+	Transcript show: installedMarker ].
+	installOutput := self run: installBlock sourceNode formattedCode , ' value: ''' , InstalledMarker , ''''.
+	(installOutput endsWith: InstalledMarker)
+		ifFalse: [ RandyRunFailed signal: installOutput ].
+	^ installOutput

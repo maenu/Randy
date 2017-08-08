@@ -1,0 +1,16 @@
+{
+	"commentStamp" : "",
+	"super" : "Object",
+	"category" : "Randy-Remote",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"state",
+		"events",
+		"lastRuns",
+		"lastRunsSize"
+	],
+	"name" : "RandyVmStats",
+	"type" : "normal"
+}

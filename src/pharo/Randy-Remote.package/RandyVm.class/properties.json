@@ -6,13 +6,15 @@
 	"pools" : [ ],
 	"classvars" : [
 		"EndMarker",
+		"InstalledMarker",
 		"StartMarker"
 	],
 	"instvars" : [
 		"process",
 		"port",
-		"image"
+		"image",
+		"state"
 	],
-	"name" : "RandyServer",
+	"name" : "RandyVm",
 	"type" : "normal"
 }

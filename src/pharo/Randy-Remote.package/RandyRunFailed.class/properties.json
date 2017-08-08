@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "",
+	"super" : "Error",
+	"category" : "Randy-Remote",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "RandyRunFailed",
+	"type" : "normal"
+}
