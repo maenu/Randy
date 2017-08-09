@@ -15,12 +15,20 @@ testRun
 	pool := hypervisor instVarNamed: #pool.
 	pool size should equal: hot.
 	(pool
-		anySatisfy: [ :vmContainer | 
-			[ (vmContainer stub run: string) shouldBeSentInAnotherProcess.
+		count: [ :vmContainer | 
+			| vm |
+			vm := vmContainer instVarNamed: #vm.
+			[ vm should receive start.
+			vm should not receive stop.
+			vm  should receive run: string.
 			vmContainer state should equal: #ready.
-			true ] ifError: [ false ] ]) should be: true.
+			true ] ifError: [ false ] ]) should equal: 1.
 	(pool
-		anySatisfy: [ :vmContainer | 
-			[ vmContainer stub should not receive run: string.
+		count: [ :vmContainer | 
+			| vm |
+			vm := vmContainer instVarNamed: #vm.
+			[ vm should receive start.
+			vm should not receive stop.
+			vm  should not receive run: string.
 			vmContainer state should equal: #ready.
-			true ] ifError: [ false ] ]) should be: true
+			true ] ifError: [ false ] ]) should equal: 1

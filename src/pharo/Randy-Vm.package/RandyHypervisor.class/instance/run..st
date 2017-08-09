@@ -6,5 +6,7 @@ run: aString
 	self cleanPool.
 	poolMonitor
 		critical: [ 
-			vmContainer := pool detect: [ :each | each state == #ready ] ].
-	^ vmContainer run: aString
+			vmContainer := pool detect: [ :each | each state == #ready ].
+			self lock: vmContainer ].
+	^ [ vmContainer run: aString ]
+		ensure: [ self release: vmContainer ]

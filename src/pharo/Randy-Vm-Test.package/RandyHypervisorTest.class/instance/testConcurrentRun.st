@@ -24,46 +24,74 @@ testConcurrentRun
 	finished signal ] fork.
 	running wait.
 	pool := hypervisor instVarNamed: #pool.
-	"pool size should equal: hot + 1."
+	pool size should equal: hot + 1.
 	(pool
 		count: [ :vmContainer | 
-			[ (vmContainer stub run: string) shouldBeSentInAnotherProcess.
+			| vm |
+			vm := vmContainer instVarNamed: #vm.
+			[ vm should receive start.
+			vm should not receive stop.
+			vm should receive run: string.
 			vmContainer state should equal: #running.
-			true ] ifError: [ false ] ]) should be: 2.
+			true ] ifError: [ false ] ]) should equal: 2.
 	(pool
-		anySatisfy: [ :vmContainer | 
-			[ vmContainer stub should not receive run: string.
+		count: [ :vmContainer | 
+			| vm |
+			vm := vmContainer instVarNamed: #vm.
+			[ vm should receive start.
+			vm should not receive stop.
+			vm should not receive run: string.
 			vmContainer state should equal: #ready.
-			true ] ifError: [ false ] ]) should be: true.
-	proceed signal.
-	finished wait.
-	(pool
-		anySatisfy: [ :vmContainer | 
-			[ (vmContainer stub run: string) shouldBeSentInAnotherProcess.
-			vmContainer state should equal: #ready.
-			true ] ifError: [ false ] ]) should be: true.
-	(pool
-		anySatisfy: [ :vmContainer | 
-			[ (vmContainer stub run: string) shouldBeSentInAnotherProcess.
-			vmContainer state should equal: #running.
-			true ] ifError: [ false ] ]) should be: true.
-	(pool
-		anySatisfy: [ :vmContainer | 
-			[ vmContainer stub should not receive run: string.
-			vmContainer state should equal: #ready.
-			true ] ifError: [ false ] ]) should be: true.
+			true ] ifError: [ false ] ]) should equal: 1.
 	proceed signal.
 	finished wait.
 	(pool
 		count: [ :vmContainer | 
-			[ (vmContainer stub run: string) shouldBeSentInAnotherProcess.
+			| vm |
+			vm := vmContainer instVarNamed: #vm.
+			[ vm should receive start.
+			vm should not receive stop.
+			vm should receive run: string.
 			vmContainer state should equal: #ready.
-			true ] ifError: [ false ] ]) should be: 2.
+			true ] ifError: [ false ] ]) should equal: 1.
 	(pool
-		anySatisfy: [ :vmContainer | 
-			[ vmContainer stub should not receive run: string.
+		count: [ :vmContainer | 
+			| vm |
+			vm := vmContainer instVarNamed: #vm.
+			[ vm should receive start.
+			vm should not receive stop.
+			vm should receive run: string.
+			vmContainer state should equal: #running.
+			true ] ifError: [ false ] ]) should equal: 1.
+	(pool
+		count: [ :vmContainer | 
+			| vm |
+			vm := vmContainer instVarNamed: #vm.
+			[ vm should receive start.
+			vm should not receive stop.
+			vm should not receive run: string.
 			vmContainer state should equal: #ready.
-			true ] ifError: [ false ] ]) should be: true.
+			true ] ifError: [ false ] ]) should equal: 1.
+	proceed signal.
+	finished wait.
+	(pool
+		count: [ :vmContainer | 
+			| vm |
+			vm := vmContainer instVarNamed: #vm.
+			[ vm should receive start.
+			vm should not receive stop.
+			vm should receive run: string.
+			vmContainer state should equal: #ready.
+			true ] ifError: [ false ] ]) should equal: 2.
+	(pool
+		count: [ :vmContainer | 
+			| vm |
+			vm := vmContainer instVarNamed: #vm.
+			[ vm should receive start.
+			vm should not receive stop.
+			vm should not receive run: string.
+			vmContainer state should equal: #ready.
+			true ] ifError: [ false ] ]) should equal: 1.
 	running isEmpty should be: true.
 	proceed isEmpty should be: true.
 	finished isEmpty should be: true

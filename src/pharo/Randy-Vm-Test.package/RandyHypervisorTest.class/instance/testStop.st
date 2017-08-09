@@ -8,11 +8,15 @@ testStop
 			mock stub port willReturn: port0.
 			mock ].
 	hypervisor start.
-	pool := hypervisor instVarNamed: #pool.
+	pool := (hypervisor instVarNamed: #pool) copy.
 	hypervisor stop should equal: hot.
 	(hypervisor instVarNamed: #pool) size should equal: 0.
 	(pool
-		allSatisfy: [ :vmContainer | 
-			[ vmContainer stub stop shouldBeSentInAnotherProcess.
-			vmContainer state should equal: #stopped.
-			true ] ifError: [ false ] ]) should be: true
+		count: [ :vmContainer | 
+			| vm |
+			vm := vmContainer instVarNamed: #vm.
+			[ vm should receive start.
+			vm should receive stop.
+			vm should not receive run: Any.
+			vmContainer state should equal: #created.
+			true ] ifError: [ false ] ]) should equal: 2

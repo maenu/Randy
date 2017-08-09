@@ -1,5 +1,6 @@
 running
 run: aString
+Transcript show: 'run called'.
 	vmMonitor
 		critical: [ statsMonitor
 				critical: [ self assert: stats state == #ready.

@@ -11,7 +11,9 @@
 		"poolMonitor",
 		"hot",
 		"image",
-		"port"
+		"port",
+		"lockMonitor",
+		"locks"
 	],
 	"name" : "RandyHypervisor",
 	"type" : "normal"
