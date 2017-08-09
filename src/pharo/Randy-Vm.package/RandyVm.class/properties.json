@@ -1,0 +1,20 @@
+{
+	"commentStamp" : "",
+	"super" : "Object",
+	"category" : "Randy-Vm",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [
+		"EndMarker",
+		"InstalledMarker",
+		"StartMarker"
+	],
+	"instvars" : [
+		"process",
+		"port",
+		"image",
+		"state"
+	],
+	"name" : "RandyVm",
+	"type" : "normal"
+}

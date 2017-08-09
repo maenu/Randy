@@ -1,0 +1,17 @@
+{
+	"commentStamp" : "",
+	"super" : "TestCase",
+	"category" : "Randy-Vm-Test",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"poolSize",
+		"hot",
+		"image",
+		"port",
+		"hypervisor"
+	],
+	"name" : "RandyHypervisorTest",
+	"type" : "normal"
+}

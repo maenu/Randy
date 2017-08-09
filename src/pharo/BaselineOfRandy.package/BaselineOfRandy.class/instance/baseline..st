@@ -16,5 +16,6 @@ baseline: spec
 					with: [ spec
 						versionString: #stable;
 						repository: 'github://marianopeck/OSSubprocess/repository' ];
+				configuration: 'Mocketry' with: [ spec baseline: 'Mocketry' with: [ spec repository: 'github://dionisiydk/Mocketry:v4.0.x' ] ];
 				package: 'Randy-Core' with: [ spec requires: #('DeepTraverser' 'NeoJSON') ];
-				package: 'Randy-Remote' with: [ spec requires: #('Randy-Core' 'OSSubprocess') ] ]
+				package: 'Randy-Remote' with: [ spec requires: #('Randy-Core' 'OSSubprocess' 'Mocketry') ] ]

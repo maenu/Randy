@@ -1,0 +1,20 @@
+{
+	"commentStamp" : "",
+	"super" : "Object",
+	"category" : "Randy-Vm",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"pool",
+		"poolSize",
+		"hot",
+		"image",
+		"port",
+		"poolMonitor",
+		"needsCleaning",
+		"cleaner"
+	],
+	"name" : "RandyHypervisor",
+	"type" : "normal"
+}

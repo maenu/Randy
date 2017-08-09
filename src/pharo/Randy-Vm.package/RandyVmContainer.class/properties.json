@@ -1,0 +1,16 @@
+{
+	"commentStamp" : "",
+	"super" : "Object",
+	"category" : "Randy-Vm",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"vm",
+		"stats",
+		"vmMonitor",
+		"statsMonitor"
+	],
+	"name" : "RandyVmContainer",
+	"type" : "normal"
+}
