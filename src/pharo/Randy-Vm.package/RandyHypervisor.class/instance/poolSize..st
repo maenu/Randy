@@ -1,5 +1,5 @@
 accessing
 poolSize: anInteger
 	poolMonitor
-		critical: [ self assert: (poolSize isNil or: anInteger isNotNil).
+		critical: [ 
 			poolSize := anInteger ]
