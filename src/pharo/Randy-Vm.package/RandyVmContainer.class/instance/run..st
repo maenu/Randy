@@ -6,10 +6,8 @@ run: aString
 					stats running ].
 			^ [ | result |
 			result := vm run: aString.
-			statsMonitor
-				critical: [stats ranWith: result].
+			statsMonitor critical: [ stats ranWith: result ].
 			result ]
 				ifError: [ :error | 
-					statsMonitor
-				critical: [stats runFailedWith: error].
+					statsMonitor critical: [ stats runFailedWith: error ].
 					error signal ] ]

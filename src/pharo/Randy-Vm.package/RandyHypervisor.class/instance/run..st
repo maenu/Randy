@@ -3,7 +3,8 @@ run: aString
 	"TODO vmContainer is not locked, best effort"
 
 	| vmContainer |
+	self cleanPool.
 	poolMonitor
-		critical: [ self start: 1.
+		critical: [ 
 			vmContainer := pool detect: [ :each | each state == #ready ] ].
-	^ [vmContainer run: aString] ensure:[needsCleaning signal]
+	^ vmContainer run: aString

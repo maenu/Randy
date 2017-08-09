@@ -20,18 +20,18 @@ start
 			'-smp'.
 			'1'.
 			'-localtime'};
-			terminateOnShutdown;
+		terminateOnShutdown;
 		redirectStdout;
 		redirectStderr;
 		yourself.
 	[ process
 		runAndWaitOnExitDo: [ :process0 :out :err | 
 			Transcript
-				show: 'RandyServer qemu exit with error status: ' , process exitStatusInterpreter printString;
+				show: 'RandyVm qemu exit with status: ' , process exitStatusInterpreter printString;
 				cr;
-				show: 'RandyServer qemu stdout: ' , out;
+				show: 'RandyVm qemu stdout: ' , out;
 				cr;
-				show: 'RandyServer qemu stderr: ' , err;
+				show: 'RandyVm qemu stderr: ' , err;
 				cr ] ] fork.
 	"wait until reachable"
 	ZnClient new

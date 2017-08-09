@@ -8,12 +8,10 @@
 	"instvars" : [
 		"pool",
 		"poolSize",
+		"poolMonitor",
 		"hot",
 		"image",
-		"port",
-		"poolMonitor",
-		"needsCleaning",
-		"cleaner"
+		"port"
 	],
 	"name" : "RandyHypervisor",
 	"type" : "normal"
