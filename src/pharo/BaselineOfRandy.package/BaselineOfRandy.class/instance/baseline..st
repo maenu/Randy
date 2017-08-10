@@ -6,12 +6,14 @@ baseline: spec
 		do: [ spec
 				configuration: 'DeepTraverser'
 					with: [ spec
-						versionString: #development;
-						repository: 'http://www.smalltalkhub.com/mc/Moose/DeepTraverser/main' ];
+						versionString: #stable;
+						repository: 'http://www.smalltalkhub.com/mc/Moose/DeepTraverser/main';
+						loads: 'Core' ];
 				configuration: 'NeoJSON'
 					with: [ spec
 						versionString: #stable;
-						repository: 'http://www.smalltalkhub.com/mc/SvenVanCaekenberghe/Neo/main' ];
+						repository: 'http://www.smalltalkhub.com/mc/SvenVanCaekenberghe/Neo/main';
+						loads: 'Core' ];
 				configuration: 'OSSubprocess'
 					with: [ spec
 						versionString: #stable;
