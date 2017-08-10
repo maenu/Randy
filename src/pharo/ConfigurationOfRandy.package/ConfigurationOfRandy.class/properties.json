@@ -1,15 +1,11 @@
 {
 	"commentStamp" : "",
-	"super" : "Object",
+	"super" : "ConfigurationOf",
 	"category" : "ConfigurationOfRandy",
 	"classinstvars" : [ ],
 	"pools" : [ ],
-	"classvars" : [
-		"LastVersionLoad"
-	],
-	"instvars" : [
-		"project"
-	],
+	"classvars" : [ ],
+	"instvars" : [ ],
 	"name" : "ConfigurationOfRandy",
 	"type" : "normal"
 }
