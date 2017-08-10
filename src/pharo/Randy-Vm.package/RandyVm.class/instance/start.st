@@ -43,7 +43,7 @@ start
 	Metacello new
 		baseline: #Randy;
 		repository: 'github://maenu/Randy:master/src/pharo';
-		load.
+		load: 'Core'.
 	SmalltalkImage current saveSession.
 	Transcript show: installedMarker ].
 	installOutput := self run: installBlock sourceNode formattedCode , ' value: ''' , InstalledMarker , ''''.
