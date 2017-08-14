@@ -1,5 +1,5 @@
-meta-data
-dependenciesOfRepository: aString configuration: anotherString
+as yet unclassified
+dependenciesOfRepository: aString configuration: anotherString with: aHypervisor
 	| block response start end |
 	block := [ :repository :configuration :startMarker :endMarker | 
 	| project simplifier json |
@@ -7,9 +7,9 @@ dependenciesOfRepository: aString configuration: anotherString
 	simplifier := RandyProjectSimplifier project: project.
 	json := simplifier asJson.
 	Transcript show: startMarker , json , endMarker ].
-	response := self run: block sourceNode formattedCode , ' value: ''' , aString , ''' value: ''' , anotherString , ''' value: ''' , StartMarker , ''' value: ''' , EndMarker , ''''.
+	response := aHypervisor run: block sourceNode formattedCode , ' value: ''' , aString , ''' value: ''' , anotherString , ''' value: ''' , StartMarker , ''' value: ''' , EndMarker , ''''.
 	start := response findString: StartMarker.
 	end := response findString: EndMarker startingAt: start + StartMarker size.
-	(start < end and: (start >= 0))
-		ifFalse: [ RandyRunFailed signal: response ].
-	^ NeoJSONReader fromString: (response copyFrom: start + StartMarker size to: end - 1)
+	(start < end and: start >= 0)
+		ifFalse: [ self error: response ].
+	^ response copyFrom: start + StartMarker size to: end - 1

@@ -10,4 +10,4 @@ start
 			result ]
 				ifError: [ :error | 
 					statsMonitor critical: [ stats startFailedWith: error ].
-					error signal ] ]
+					self error: error ] ]

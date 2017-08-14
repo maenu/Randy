@@ -1,0 +1,14 @@
+{
+	"commentStamp" : "",
+	"super" : "Object",
+	"category" : "Randy-Server",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [
+		"EndMarker",
+		"StartMarker"
+	],
+	"instvars" : [ ],
+	"name" : "RandyZnDependenciesDelegate",
+	"type" : "normal"
+}

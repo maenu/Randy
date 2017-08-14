@@ -1,16 +1,18 @@
-meta-data
+as yet unclassified
 start
 	| installBlock installOutput |
 	"ensure old process is stopped"
 	process ifNotNil: [ self stop ].
 	"run new process"
+	"TODO copy image to make sure its unchanged"
 	process := OSSUnixSubprocess new
 		command: 'qemu-system-i386';
 		arguments:
 			{'-nographic'.
-			'-snapshot'.
 			'-hda'.
 			image.
+			'-loadvm'.
+			'randy-installed'.
 			'-device'.
 			'e1000,netdev=net0'.
 			'-netdev'.
@@ -37,16 +39,4 @@ start
 	ZnClient new
 		numberOfRetries: 30;
 		retryDelay: 1;
-		head: 'http://localhost:' , port asString.
-	"install randy"
-	installBlock := [ :installedMarker | 
-	Metacello new
-		baseline: #Randy;
-		repository: 'github://maenu/Randy:master/src/pharo';
-		load: 'Core'.
-	SmalltalkImage current saveSession.
-	Transcript show: installedMarker ].
-	installOutput := self run: installBlock sourceNode formattedCode , ' value: ''' , InstalledMarker , ''''.
-	(installOutput endsWith: InstalledMarker)
-		ifFalse: [ RandyRunFailed signal: installOutput ].
-	^ installOutput
+		head: 'http://localhost:' , port asString

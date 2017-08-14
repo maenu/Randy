@@ -1,11 +1,11 @@
 {
 	"commentStamp" : "",
-	"super" : "Error",
-	"category" : "Randy-Vm",
+	"super" : "ZnMultiThreadedServer",
+	"category" : "Randy-Server",
 	"classinstvars" : [ ],
 	"pools" : [ ],
 	"classvars" : [ ],
 	"instvars" : [ ],
-	"name" : "RandyRunFailed",
+	"name" : "RandyZnServer",
 	"type" : "normal"
 }

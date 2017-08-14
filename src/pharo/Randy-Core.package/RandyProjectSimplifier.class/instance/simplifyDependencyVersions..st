@@ -1,6 +1,7 @@
 as yet unclassified
 simplifyDependencyVersions: aCollection
 	^ aCollection
-		collect: [ :dependencyVersion | 
-			{(#project -> dependencyVersion projectLabel).
-			(#version -> dependencyVersion versionString)} asDictionary ] 
+		collect: [ :dependency | 
+			{(#project -> dependency className).
+			(#repository -> (dependency repositories collect: [ :repository | repository description ]) first).
+			(#version -> dependency versionString)} asDictionary ]

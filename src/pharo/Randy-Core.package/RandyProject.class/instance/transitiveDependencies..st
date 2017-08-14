@@ -1,4 +1,10 @@
 accessing
 transitiveDependencies: aVersion
 	self ensureProjectLoaded.
-	^ ((self directDependencies: aVersion) flatCollect: [ :dependency | dependency deepCollect: [ :version | version projects collect: #version ] as: Set ] as: Set) reject: #isNil
+	^ (self directDependencies: aVersion)
+		flatCollect: [ :dependency | 
+			dependency
+				deepCollectAsSet: [ :dependencyProject | 
+					| dependencyVersion |
+					dependencyVersion := dependencyProject version.
+					dependencyVersion ifNil: [ #() ] ifNotNil: [ dependencyVersion projects  ] ] ]

@@ -1,16 +1,14 @@
 {
 	"commentStamp" : "",
 	"super" : "Object",
-	"category" : "Randy-Vm",
+	"category" : "Randy-Server",
 	"classinstvars" : [ ],
 	"pools" : [ ],
 	"classvars" : [ ],
 	"instvars" : [
-		"process",
-		"port",
-		"image",
-		"state"
+		"routes",
+		"hypervisor"
 	],
-	"name" : "RandyVm",
+	"name" : "RandyZnHypervisorDispatcherDelegate",
 	"type" : "normal"
 }

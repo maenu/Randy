@@ -1,4 +1,4 @@
-meta-data
+as yet unclassified
 run: aString
 	^ ZnClient new
 		beOneShot;
