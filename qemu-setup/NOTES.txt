@@ -3,18 +3,20 @@ http://www.damnsmalllinux.org/wiki/qemu.html
 http://wiki.tinycorelinux.net/wiki:persistence_for_dummies
 
 set home, opt, tce in /opt/.filetool.lst
-install tc-install, bash, freetype, busybox-httpd, openssh from tce-ab, tc-install.sh to disk, set up ssh, autostart, filetool conf
+install tc-install, bash, freetype, busybox-httpd, openssh, getlocale from tce-ab, tc-install.sh to disk, set up ssh, autostart, filetool conf
 
 wget -O- get.pharo.org | bash
 filetool.sh -b
 
-qemu-img create -f qcow pharo.img 512M
+qemu-img create -f qcow2 pharo.qcow2 512M
 
-qemu-system-i386 -hda pharo.img -cdrom Core-current.iso -boot d -m 512 -smp 1 -localtime
+qemu-system-i386 -hda pharo.qcow2 -cdrom Core-current.iso -boot d -m 512 -smp 1 -localtime -monitor stdio
 
-qemu-system-i386 -hda pharo.img -device e1000,netdev=net0 -netdev user,id=net0,hostfwd=tcp::2222-:22,hostfwd=tcp::8080-:80 -m 512 -smp 1 -localtime
+(qemu) savevm
 
-qemu-system-i386 -nographic -snapshot -hda pharo.img -device e1000,netdev=net0 -netdev user,id=net0,hostfwd=tcp::8080-:80 -m 512 -smp 1 -localtime
+qemu-system-i386 -hda pharo.qcow2 -loadvm randy-installed -device e1000,netdev=net0 -netdev user,id=net0,hostfwd=tcp::2222-:22,hostfwd=tcp::8080-:80 -m 512 -smp 1 -localtime -monitor stdio
+
+qemu-system-i386 -nographic -hda pharo.qcow2 -loadvm randy-installed -device e1000,netdev=net0 -netdev user,id=net0,hostfwd=tcp::8080-:80 -m 512 -smp 1 -localtime
 
 scp -P 2222 run tc@localhost:~/www/cgi-bin/
 

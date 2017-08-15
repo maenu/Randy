@@ -1,5 +1,7 @@
-#!/bin/sh
+#!/usr/local/bin/bash
 
-cd /home/tc
-
-./pharo -vm-display-null -vm-sound-null Pharo.image --no-default-preferences "$@"
+CMD="/home/tc/pharo/pharo -vm-display-null -vm-sound-null /home/tc/pharo/Pharo.image --no-default-preferences $@" 
+sudo -s <<HEREDOC
+	ulimit -r 2
+	su - -c "$CMD" tc 
+HEREDOC

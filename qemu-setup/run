@@ -1,10 +1,8 @@
 #!/usr/local/bin/bash
 
-cd /home/tc
-
-LOCK='run.lock'
-SCRIPT='run.st'
-LOG='run.log'
+LOCK='/home/tc/run.lock'
+SCRIPT='/home/tc/run.st'
+LOG='/home/tc/run.log'
 
 set_content() {
 	CONTENT="$1"
@@ -15,15 +13,14 @@ set_content() {
 	printf "$CONTENT"
 }
 run_pharo() {
-	./pharo-default st --quit "$1" &> "$2"
+	/home/tc/pharo-default st --quit "$1" &> "$2"
 	if [ $? -ne 0 ]
 	then
 		printf 'HTTP/1.1 400 Bad Request\r\n'
 	else
 		printf 'HTTP/1.1 200 OK\r\n'
 	fi
-	# skip iconv_open(UTF-8, MACINTOSH): Invalid argument
-	set_content "$(tail -n +2 "$2")"
+	set_content "$(cat "$2")"
 	rm -f "$1" "$2"
 }
 # available in subshell
