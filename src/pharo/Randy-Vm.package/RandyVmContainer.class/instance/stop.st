@@ -1,13 +1,13 @@
 running
 stop
-	"No monitor, this must always forces stop."
 
+	vmMonitor
+		critical: [
 	statsMonitor critical: [ stats stopping ].
 	^ [ | result |
 	result := vm stop.
-	vmMonitor critical: [ statsMonitor critical: [ stats stoppedWith: result ] ].
+	statsMonitor critical: [ stats stoppedWith: result ] .
 	result ]
 		ifError: [ :error | 
-			vmMonitor
-				critical: [ statsMonitor critical: [ stats stopFailedWith: error ].
-					error signal ] ]
+			statsMonitor critical: [ stats stopFailedWith: error ].
+					self error: error ] ]

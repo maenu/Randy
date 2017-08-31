@@ -1,16 +1,24 @@
-as yet unclassified
+accessing
 start
-	| installBlock installOutput |
+	| copied |
 	"ensure old process is stopped"
 	process ifNotNil: [ self stop ].
 	"run new process"
-	"TODO copy image to make sure its unchanged"
+	copied := OSSUnixSubprocess new
+		command: 'cp';
+		arguments:
+			{image.
+			(image , '.' , port asString)};
+		run;
+		waitForExit.
+	copied = 0
+		ifFalse: [ self error: 'Copy of snapshot image failed with exit status ' , copied asString ].
 	process := OSSUnixSubprocess new
 		command: 'qemu-system-i386';
 		arguments:
 			{'-nographic'.
 			'-hda'.
-			image.
+			(image , '.' , port asString).
 			'-loadvm'.
 			'randy-installed'.
 			'-device'.
