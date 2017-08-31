@@ -16,6 +16,10 @@ qemu-system-i386 -hda pharo.qcow2 -cdrom Core-current.iso -boot d -m 512 -smp 1 
 
 qemu-system-i386 -hda pharo.qcow2 -loadvm randy-installed -device e1000,netdev=net0 -netdev user,id=net0,hostfwd=tcp::2222-:22,hostfwd=tcp::8080-:80 -m 512 -smp 1 -localtime -monitor stdio
 
+qemu-img create -f qcow2 -b pharo.qcow2 pharo.qcow2.snap
+
+qemu-system-i386 -hda pharo.qcow2.snap -loadvm randy-installed -device e1000,netdev=net0 -netdev user,id=net0,hostfwd=tcp::2222-:22,hostfwd=tcp::8080-:80 -m 512 -smp 1 -localtime -monitor stdio
+
 qemu-system-i386 -nographic -hda pharo.qcow2 -loadvm randy-installed -device e1000,netdev=net0 -netdev user,id=net0,hostfwd=tcp::8080-:80 -m 512 -smp 1 -localtime
 
 scp -P 2222 run tc@localhost:~/www/cgi-bin/
