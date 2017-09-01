@@ -1,6 +1,7 @@
 public
 stop
 	| vmContainers join |
+	running :=false.
 	poolMonitor
 		critical: [ vmContainers := pool copy.
 			pool removeAll.
@@ -9,6 +10,7 @@ stop
 	^ vmContainers
 		do: [ :each | 
 			[ [ each stop ]
-				ensure: [ self release: each . join signal ] ] fork ];
+				ensure: [ self release: each.
+					join signal ] ] fork ];
 		do: [ :each | join wait ];
 		size

@@ -1,7 +1,6 @@
 public
 run: aString
 	| vmContainer |
-	self cleanPool.
 	poolMonitor
 		critical: [ poolMonitor waitUntil: [ pool anySatisfy: [ :each | each state == #ready ] ].
 			vmContainer := pool detect: [ :each | each state == #ready ].

@@ -13,7 +13,8 @@
 		"image",
 		"port",
 		"lockMonitor",
-		"locks"
+		"locks",
+		"running"
 	],
 	"name" : "RandyHypervisor",
 	"type" : "normal"
