@@ -24,4 +24,8 @@ qemu-system-i386 -nographic -hda pharo.qcow2 -loadvm randy-installed -device e10
 
 scp -P 2222 run tc@localhost:~/www/cgi-bin/
 
-echo 'Transcript show: 1 + 2; cr.' | curl -d @- -H "Content-Type: text/plain" -v localhost:8080/cgi-bin/run
+echo 'Transcript show: \'Hello World!\'; cr.' | curl -d @- -H "Content-Type: text/plain" -v localhost:8080/cgi-bin/run
+
+curl -v 'http://localhost:8888/dependencies?repository=http%3A%2F%2Fsmalltalkhub.com%2Fmc%2FAlainPLantec%2FStepExpress%2Fmain&configuration=ConfigurationOfPetitStepExpress'
+
+RandyProject repository: 'http://smalltalkhub.com/mc/CyrilFerlicot/PetitPillar/main' configuration: 'ConfigurationOfPetitPillar'
